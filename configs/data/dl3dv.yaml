@@ -1,0 +1,14 @@
+# Define the common data root and number of views
+data_root: vidfm3d/data/DL3DV/DL3DV-processed
+
+data_module:
+  _target_: vidfm3d.data.video_probe_datamodule.VideoProbeDataModule
+  train_datasets:
+    - VideoProbeDataset(root='${data.data_root}', subset='1K', split='train', num_views=4, view_interval=5)
+  validation_datasets:
+    - VideoProbeDataset(root='${data.data_root}', subset='1K', split='test', seed=0, num_views=4, view_interval=5)
+  batch_size_per_device: 2
+  batch_size_per_device_val: 2
+  num_workers: 6
+  num_workers_val: 6
+  pin_memory: True

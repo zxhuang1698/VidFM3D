@@ -1,0 +1,74 @@
+# @package _global_
+
+defaults:
+  - override /model: probe
+
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: 42
+
+tags: ["train", "co3d"]
+
+task_name: co3d
+job_name: default # must set in the command line
+
+autoresume: true
+# ckpt_path: /path/to/resume.ckpt  # uncomment to resume training from a checkpoint
+
+paths:
+  run_folder_name: ${task_name}_${job_name}
+
+feat_postfix: _t749_layer20
+data:
+  data_module:
+    train_datasets:
+    - VideoProbeDataset(root='vidfm3d/data/CO3D/CO3D-processed', root_vfm='vidfm3d/data/CO3D/FEAT', subset='all', split='train', vfm_name='cogvideox', feat_postfix='${feat_postfix}', feat_pixalign=True, num_views=4, min_view_interval=5, context_len=76, query_idx_divisor=4)
+    validation_datasets:
+    - VideoProbeDataset(root='vidfm3d/data/CO3D/CO3D-processed', root_vfm='vidfm3d/data/CO3D/FEAT', subset='all', split='val', vfm_name='cogvideox', feat_postfix='${feat_postfix}', feat_pixalign=True, num_views=4, min_view_interval=5, context_len=76, query_idx_divisor=4, seed=0)
+    batch_size_per_device: 10
+    batch_size_per_device_val: 10
+    num_workers: 8
+    num_workers_val: 8
+
+logger:
+  wandb:
+    name: ${task_name}_${job_name}
+    group: ${task_name}
+
+model:
+  probe_type: pixalign
+  probe:
+    _target_: vidfm3d.models.components.probe_pixalign.ProbeModelPA
+    embed_dim: 1024
+    video_channels: 3072
+    backbone_depth: 4
+    dpt_intermediate_layer_idx: [0, 1, 2, 3]
+    gradient_checkpointing: true
+    active_heads: ["depth", "point", "camera"]
+  val_viz_freq: 5
+
+  loss_weights:
+    pmap: 1.0
+    dmap: 1.0
+    pmap_grad: 0.0
+    dmap_grad: 0.0
+    camera: 1.0
+
+  normalize_pred: true
+  normalize_gt: true
+  soft_bg_weight: 0.0
+  cmap_power: 1.0
+
+trainer:
+  devices: auto
+  max_epochs: 75
+  precision: bf16-mixed
+  # strategy: deepspeed_stage_2
+  # strategy:
+  #   _target_: lightning.pytorch.strategies.DeepSpeedStrategy
+  #   timeout:
+  #     _target_: datetime.timedelta
+  #     minutes: 80

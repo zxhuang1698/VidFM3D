@@ -1,0 +1,42 @@
+# --------- lightning --------- #
+lightning>=2.5.0
+lightning-bolts
+lightning-utilities
+torchmetrics
+torchinfo
+
+# --------- hydra --------- #
+hydra-core
+hydra-colorlog
+hydra-optuna-sweeper
+
+# --------- loggers --------- #
+wandb
+
+# --------- others --------- #
+rootutils       # standardizing the project root setup
+rich            # beautiful text formatting in terminal
+
+# --------- project core --------- #
+trimesh
+roma
+open3d
+einops
+deepspeed
+gradio
+matplotlib
+tqdm
+transformers
+diffusers
+jaxtyping
+opencv-python
+viser
+pillow_heif
+plotly
+scikit-image
+scikit-learn
+scipy
+seaborn
+safetensors
+pyglet<2
+huggingface-hub[torch]>=0.22

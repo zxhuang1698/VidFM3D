@@ -1,0 +1,49 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+env/
+venv/
+.venv/
+.env
+
+# PyTorch
+*.pt
+*.pth
+
+# Distribution
+build/
+dist/
+
+# Logs
+*.log
+
+# Egg-info
+*.egg-info/
+
+# IDE / tooling
+.vscode/
+.claude/
+.github/
+.editorconfig
+
+# temporary files
+vidfm3d/vggt/tmp**
+
+# Data
+vidfm3d/data/DL3DV
+vidfm3d/data/CO3D
+
+# Certificates
+certificate.pem
+
+# Output
+logs/
+gradio_tmp_dir/
+temp**
+demo_outputs/
+
+# Checkpoints
+**tar
+**ckpt
