@@ -54,7 +54,7 @@ If PyTorch3D compilation fails with #error -- unsupported GNU version! gcc versi
 
 ### CO3Dv2
 
-1. **Download** the raw CO3Dv2 dataset following [the official instructions](https://ai.meta.com/datasets/co3d-downloads/). Place (or symlink) the downloaded categories under `vidfm3d/data/CO3D/CO3D-data/`.
+1. **Download** the raw CO3Dv2 dataset following [the official instructions](https://github.com/facebookresearch/co3d). Place (or symlink) the downloaded categories under `vidfm3d/data/CO3D/CO3D-data/`.
 
 2. **Extract frames**: crops each sequence to a fixed aspect ratio (16:9 by default), subsamples to 81 frames, and rejects poorly-cropped sequences:
 ```bash
